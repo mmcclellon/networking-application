@@ -22,7 +22,8 @@ def handle_client(connection, address):
                     message_type = request.get('type')
 
                     if message_type == 'PING':
-                        response = {"type":"PONG"}
+                      response = {"type": "PONG"}
+
                     else:
                         response = {"type":"ERROR", "message":"Unknown message type"}
 
