@@ -2,6 +2,7 @@ import socket
 import json
 import threading
 import time
+import getpass
 
 HOST = 'localhost'
 PORT = 5001
@@ -92,7 +93,7 @@ def start_client():
 
         try:
             while not stop_event.is_set():
-                command = input('Enter command (PING or QUIT): ').strip().upper()
+                command = input('Enter command (REGISTER, LOGIN, PING, LOGOUT OR QUIT): ').strip().upper()
 
                 if command == 'QUIT':
                     print('Disconnecting from the server...')
@@ -101,8 +102,14 @@ def start_client():
                 if stop_event.is_set():
                     break
 
+                
+                message = {"type": command}
+                if command in ('REGISTER', 'LOGIN'):
+                    message["username"] = input('Username: ').strip()
+                    message["password"] = getpass.getpass('Password: ')
+
                 try:
-                    send_message({"type": command})
+                    send_message(message)
                 except OSError:
                     print('Unable to send message.')
                     break
