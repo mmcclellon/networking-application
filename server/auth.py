@@ -3,10 +3,10 @@ import hmac
 import os
 import re
 
-# PBKDF2 settings. More iterations = slower for an attacker to guess passwords from a stolen hash.
+# more iterations = slower for an attacker to guess passwords from a stolen hash.
 HASH_ALGORITHM = 'sha256'
 ITERATIONS = 200_000
-SALT_SIZE = 16  # bytes
+SALT_SIZE = 16  #bytes
 
 USERNAME_PATTERN = re.compile(r'[A-Za-z0-9_]{3,20}')
 MIN_PASSWORD_LENGTH = 8
@@ -30,7 +30,7 @@ def verify_password(password, salt_hex, stored_hash_hex):
 
 
 def is_valid_username(username):
-    # fullmatch = the WHOLE string must match (3-20 letters, digits or underscores)
+    # fullmatch = the whole string must match 3-20 letters, digits or underscores
     return USERNAME_PATTERN.fullmatch(username) is not None
 
 
