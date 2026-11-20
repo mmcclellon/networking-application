@@ -10,21 +10,29 @@ def start_client():
         client.connect((HOST, PORT))
         print('Connected to SOLD! server')
 
-        message = {"type":"PING"}
-
-        message_json = json.dumps(message) + "\n"
-
-        client.sendall(message_json.encode("utf-8"))
-
-
         with client.makefile("r", encoding="utf-8") as reader:
-            response = reader.readline()
-        
-        if response:
-            response_data = json.loads(response)
-            print("Server response:", response_data)
-        else:
-            print("server closed the connection.")
+            while True:
+                command = input('Enter command (PING or QUIT): ').strip().upper()
+
+                if command == 'QUIT':
+                    print('Disconnecting from the server')
+                    break
+
+                message = {"type": command}
+                message_json = json.dumps(message) + "\n"
+
+                client.sendall(message_json.encode("utf-8"))
+
+                response = reader.readline()
+
+                if not response:
+                    print("Server closed the connection.")
+                    break
+                
+                response_data = json.loads(response)
+                print("Server response:", response_data)
+                
+    print("Disconnected from SOLD! server.")
 
 if __name__ == '__main__':
     start_client()
