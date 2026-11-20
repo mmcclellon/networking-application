@@ -33,3 +33,40 @@ Online auctions require a reliable system to manage multiple users placing bids 
 
 <h3>Targeted Users</h3>
 University of Memphis students that are interested in buying or selling items through an online auction platform. Sellers will be able to create auctions and provide information about their items, while buyers can browse auctions and compete with other users by placing bids. The system is designed for users who want a simple way to participate in auctions without needing to manage the bidding process themselves.
+
+
+<h3>How to Run</h3>
+
+**Requirements:** Python 3.8 or newer. No extra packages are needed. Run every command from the project's root folder.
+
+**1. Start the server (server machine)**
+```
+python -m server.server
+```
+- `python server/server.py` does not work. The server imports from the `database` package, so it must be started with `-m` from the root folder.
+- The accounts database `database/sold.db` is created automatically the first time the server runs.
+- Find the server's IP address with `ipconfig` (Windows) or `ip a` (Mac/Linux).
+- If the firewall asks, allow Python on private networks (port **5001**).
+
+**2. Start a client (on a different machine on the same network)**
+1. Open `client/client.py` and set `HOST` to the server's IP address, e.g. `HOST = '192.168.1.25'`
+2. Run:
+```
+python -m client.client
+```
+Start more clients on other machines to test multiple users at once.
+
+**3. Client commands**
+
+| Command | What it does |
+|---|---|
+| `REGISTER` | Create an account. Username: 3–20 letters, digits or `_`. Password: 8–128 characters. |
+| `LOGIN` | Log in. The password is hidden while typing. |
+| `PING` | Check the connection. The client also sends a heartbeat automatically every 10 seconds. |
+| `LOGOUT` | Log out and disconnect. |
+| `QUIT` | Close the client. |
+
+All commands except `REGISTER`, `LOGIN` and `PING` require logging in first.
+
+**Auction interface prototype**
+`auction_interface.py` previews the auction menu (view auctions, place bids, refresh) using sample data. It is not connected to the server yet. Run it with `python auction_interface.py`.
