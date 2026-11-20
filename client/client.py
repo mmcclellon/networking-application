@@ -103,7 +103,7 @@ def start_client():
                     break
 
                 
-                send_message({"type": command})
+                message = {"type": command}
                 if command in ('REGISTER', 'LOGIN'):
                     message["username"] = input('Username: ').strip()
                     message["password"] = getpass.getpass('Password: ')

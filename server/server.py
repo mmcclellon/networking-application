@@ -139,7 +139,7 @@ def handle_client(connection, address):
                         break
 
                 except json.JSONDecodeError:
-                    response = {"type":"ERROR","message":"Invalid JSON", "message":"Invalid JSON"}
+                    response = {"type":"ERROR","message":"Invalid JSON"}
                     try:
                         connection.sendall((json.dumps(response) + "\n").encode("utf-8"))
                     except OSError:
@@ -163,8 +163,8 @@ def handle_client(connection, address):
         print(f'Disconnected: {address}')
 
 def start_server():
-    init_db() #create and start tcp server
-    # Create & start TCP server
+    init_db() 
+
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as server:
         server.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
         
